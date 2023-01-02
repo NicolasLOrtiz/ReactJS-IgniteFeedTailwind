@@ -1,10 +1,22 @@
 import React from "react";
 import { Comment } from "./Comment";
 
-export const CommentList: React.FC = () => (
+interface CommentListProps {
+  comments: string[];
+  deleteComment: (commentToDelete: string) => void;
+}
+
+export const CommentList: React.FC<CommentListProps> = ({
+  comments,
+  deleteComment,
+}) => (
   <div>
-    <Comment />
-    <Comment />
-    <Comment />
+    {comments.map((comment) => (
+      <Comment
+        key={comment}
+        content={comment}
+        onDeleteComment={deleteComment}
+      />
+    ))}
   </div>
 );

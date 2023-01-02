@@ -1,11 +1,28 @@
+import { format, formatDistanceToNow } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 import React from "react";
 
-export const PostDate: React.FC = () => (
-  <time
-    title="11 de maio ás 8:13"
-    dateTime="2022-05-11 08:13:30"
-    className="text-sm text-gray-400"
-  >
-    Publicado há 1h
-  </time>
-);
+type PostDateProps = {
+  date: Date;
+};
+
+export const PostDate: React.FC<PostDateProps> = ({ date }) => {
+  const publishedDateFormatted = format(date, "d 'de' LLLL 'às' HH:mm'h'", {
+    locale: ptBR,
+  });
+
+  const publishedDateRelativeToNow = formatDistanceToNow(date, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
+  return (
+    <time
+      title={publishedDateFormatted}
+      dateTime={date.toISOString()}
+      className="text-sm text-gray-400"
+    >
+      {publishedDateRelativeToNow}
+    </time>
+  );
+};
